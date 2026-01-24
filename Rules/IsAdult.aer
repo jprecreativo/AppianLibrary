@@ -1,0 +1,35 @@
+True if the person is adult, false otherwise.
+
+-> birthdate (Date)
+-> value (Integer)
+
+if(
+  and(
+    a!isNotNullOrEmpty(ri!birthdate),
+    a!isNotNullOrEmpty(ri!value)
+  ),
+  a!localVariables(
+    local!diffYears: year(today()) - year(ri!birthdate),
+    local!diffMonths: month(today()) - month(ri!birthdate),
+    local!diffDays: day(today()) - day(ri!birthdate),
+    if(
+      local!diffYears > ri!value,
+      true,
+      if(
+        local!diffYears < ri!value,
+        false,
+        if(
+          local!diffMonths > 0,
+          true,
+          if(
+            local!diffMonths < 0,
+            false,
+            if(local!diffDays >= 0, true, false)
+          )
+        )
+      )
+    )
+  ),
+  false
+)
+
