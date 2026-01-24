@@ -1,1 +1,39 @@
+Given a start day and an end date, returns a map with the difference between end date and start date in days, hours, minutes, seconds and milliseconds.
 
+-> startDate (Date and Time)
+-> endDate (Date and Time)
+
+if(
+  and(
+    a!isNotNullOrEmpty(ri!startDate),
+    a!isNotNullOrEmpty(ri!endDate)
+  ),
+  a!localVariables(
+    local!interval: ri!endDate - ri!startDate,
+    local!firstSplit: split(local!interval, "::"),
+    local!days: tointeger(local!firstSplit[1]),
+    local!secondSplit: split(local!firstSplit[2], ":"),
+    local!hours: tointeger(local!secondSplit[1]),
+    local!minutes: tointeger(local!secondSplit[2]),
+    local!thirdSplit: split(local!secondSplit[3], "."),
+    local!seconds: tointeger(local!thirdSplit[1]),
+    local!milliseconds: tointeger(local!thirdSplit[2]),
+    a!map(
+      days: local!days,
+      hours: local!hours,
+      minutes: local!minutes,
+      seconds: local!seconds,
+      milliseconds: if(
+        local!milliseconds = 0,
+        local!milliseconds,
+        local!milliseconds + 1
+      )
+    )
+  ),
+  null
+)
+
+1. Nulls check (null, null) -> Test output matches the asserted output -> Any Type (null) -> Default
+2. Start date < End date (datetime(2026, 1, 1, 4, 10, 50, 480), datetime(2027, 2, 2, 5, 11, 51, 500)) -> Test completes without errors
+3. Start date > End date (datetime(2027, 2, 2, 5, 11, 51, 500), datetime(2026, 1, 1, 4, 10, 50, 480)) -> Test completes without errors
+4. Start date = End date (datetime(2026, 1, 1, 4, 10, 50, 480), datetime(2026, 1, 1, 4, 10, 50, 480)) -> Test completes without errors
