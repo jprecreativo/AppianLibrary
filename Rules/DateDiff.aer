@@ -33,7 +33,7 @@ if(
   null
 )
 
-1. Nulls check (null, null) -> Test output matches the asserted output -> Any Type (null) -> Default
+1. Nulls check (null, null) -> Test output matches the asserted output -> null (Any Type) -> Default
 2. Start date < End date (datetime(2026, 1, 1, 4, 10, 50, 480), datetime(2027, 2, 2, 5, 11, 51, 500)) -> Test completes without errors
 3. Start date > End date (datetime(2027, 2, 2, 5, 11, 51, 500), datetime(2026, 1, 1, 4, 10, 50, 480)) -> Test completes without errors
 4. Start date = End date (datetime(2026, 1, 1, 4, 10, 50, 480), datetime(2026, 1, 1, 4, 10, 50, 480)) -> Test completes without errors
