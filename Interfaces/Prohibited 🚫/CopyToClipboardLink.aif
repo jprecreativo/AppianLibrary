@@ -1,0 +1,18 @@
+Example of the component "CopyToClipboardLink".
+
+a!localVariables(
+  local!copyText: "¡Subscríbete!",
+  local!link: 'type!{http://www.appian.com/ae/types/2009}CopyToClipboardLink'(textToCopy: local!copyText),
+  {
+    a!richTextDisplayField(
+      labelPosition: "COLLAPSED",
+      value: {
+        a!richTextIcon(
+          icon: "copy",
+          linkStyle: "STANDALONE",
+          link: local!link
+        )
+      }
+    )
+  }
+)
