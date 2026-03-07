@@ -1,0 +1,47 @@
+Given a map or dictionary and a list of keys, it will return a map without the keys that are in the list.
+
+-> object (Any Type)
+-> keysToRemove (Array of texts)
+
+if(
+  or(
+    a!isNullOrEmpty(ri!keysToRemove),
+    and(
+      typeof(ri!object) <> typeof({ foo: "bar" }),
+      typeof(ri!object) <> typeof(a!map())
+    )
+  ),
+  ri!object,
+  a!localVariables(
+    local!allKeys: a!keys(ri!object),
+    local!keys: reject(
+      fn!isnull,
+      a!forEach(
+        items: local!allKeys,
+        expression: if(
+          contains(ri!keysToRemove, fv!item),
+          null,
+          fv!item
+        )
+      )
+    ),
+    local!values: a!forEach(
+      items: local!keys,
+      expression: ri!object[fv!item]
+    ),
+    reduce(
+      a!update,
+      a!map(),
+      merge(local!keys, local!values)
+    )
+  )
+)
+
+1. Nulls check (null, null) -> Assertion expression evaluates to true -> isnull(test!output) -> Default
+2. No map or dictionary -> Assertion expression evaluates to true -> test!output = ri!object
+3. Dictionary has no keys to remove -> Test completes without errors
+4. Map has no keys to remove -> Test completes without errors
+5. Dictionary remove some keys -> Test completes without errors
+6. Map remove some keys -> Test completes without errors
+7. Dictionary remove all keys -> Assertion expression evaluates to true -> a!isNullOrEmpty(a!keys(test!output))
+8. Map remove all keys -> Assertion expression evaluates to true -> a!isNullOrEmpty(a!keys(test!output))
