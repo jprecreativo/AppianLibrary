@@ -1,0 +1,10 @@
+a!match(
+  value: ri!number,
+  equals: 1,
+  then: try(concat(), "Failed"),
+  equals: 2,
+  then: try(concat("a", "b"), "Failed"),
+  equals: 3,
+  then: try(concat(), fn!lastError().details),
+  default: null
+)
