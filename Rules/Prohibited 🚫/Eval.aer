@@ -1,0 +1,4 @@
+{
+  eval("cons!JPS_LIKE"),
+  eval("len(""JP"")")
+}
