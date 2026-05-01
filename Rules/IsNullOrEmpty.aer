@@ -1,4 +1,14 @@
+A better approach to know if value is null or empty. Useful when check if an array have only null or empty values or if a relationship of a record has something.
+
+-> value (Any Type)
+
 or(
   a!isNullOrEmpty(ri!value),
   length(ri!value) = 0
 )
+
+1. Nulls value (null) -> Test output matches the asserted output -> true (Boolean) -> Default
+2. Empty array ({}) -> Test output matches the asserted output -> true (Boolean)
+3. Array of nulls ({ null, null }) -> Test output matches the asserted output -> true (Boolean)
+4. Array of empty arrays ({ {}, {} }) -> Test output matches the asserted output -> true (Boolean)
+5. Array of empty strings ({ "", "" }) -> Test output matches the asserted output -> true (Boolean)
