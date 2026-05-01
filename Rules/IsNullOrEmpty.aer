@@ -1,0 +1,4 @@
+or(
+  a!isNullOrEmpty(ri!value),
+  length(ri!value) = 0
+)
