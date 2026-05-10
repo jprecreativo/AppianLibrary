@@ -1,0 +1,29 @@
+Safer way to use wherecontains.
+
+-> valuesToFind (Any Type)
+-> valuesArray (Any Type)
+
+if(
+  a!isNullOrEmpty(ri!valuesArray),
+  {},
+  a!localVariables(
+    local!valuesCasted: a!forEach(
+      items: ri!valuesArray,
+      expression: cast(
+        typeof(
+          if(
+            length(ri!valuesToFind) = 1,
+            ri!valuesToFind,
+            ri!valuesToFind[1]
+          )
+        ),
+        fv!item
+      )
+    ),
+    wherecontains(ri!valuesToFind, local!valuesCasted)
+  )
+)
+
+1. Nulls check (null, null) -> Test output matches the asserted output -> {} (Any Type) -> Default
+2. Mixed valuesArray ({ "Hola", "Adiós" }, { "Hola", "Adiós", 1 }) -> Test output matches the asserted output -> { 1, 2 } (Array of integers)
+3. Mixed valuesArray but no value is found ({ "Hola", "Adiós" }, { 1, 2, "JP" }) -> Test output matches the asserted output -> {} (Array of integers)
